@@ -15,7 +15,7 @@ def make_request(url):
 
 def create_res():
     try:
-        target_url = "https://192.168.31.52/api/results"
+        target_url = "https://192.168.31.52/api/latest_results"
         response_text = make_request(target_url)
 
         try:
