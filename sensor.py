@@ -1,19 +1,21 @@
 import json
-import sys
 import requests
 from paesslerag_prtg_sensor_api.sensor.result import CustomSensorResult
 from paesslerag_prtg_sensor_api.sensor.units import ValueUnit
 
 def make_request(url):
     try:
-        response = requests.get(url)
-        return response.text.strip()
+        response = requests.get(url, verify=False)
+        data = json.loads(response.text.strip())
+        scores = [float(item.get("score", 0)) for item in data]
+        highest_score = max(scores)
+        return highest_score
     except requests.RequestException as e:
         return str(e)
 
 def create_res():
     try:
-        target_url = "http://127.0.0.1:8000"
+        target_url = "https://192.168.31.52/api/results"
         response_text = make_request(target_url)
 
         try:
